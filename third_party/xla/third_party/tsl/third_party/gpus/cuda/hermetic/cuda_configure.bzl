@@ -31,6 +31,17 @@ load(
     "get_host_environ",
     "which",
 )
+load(
+    "@bazel_tools//tools/cpp:lib_cc_configure.bzl",
+    "escape_string",
+    "get_env_var",
+)
+load(
+    "@bazel_tools//tools/cpp:windows_cc_configure.bzl",
+    "find_msvc_tool",
+    "find_vc_path",
+    "setup_vc_env_vars",
+)
 
 def _find_cc(repository_ctx):
     """Find the C++ compiler."""
@@ -274,15 +285,64 @@ def _setup_toolchains(repository_ctx, cc, cuda_version):
 
     # We do not support hermetic CUDA on Windows.
     # This ensures the CROSSTOOL file parser is happy.
+
+    # third_party\gpus\cuda_configure.bzl
+    vc_path = find_vc_path(repository_ctx)
+    if not vc_path:
+        fail(
+            "Visual C++ build tools not found on your machine." +
+            "Please check your installation following https://docs.bazel.build/versions/master/windows.html#using",
+        )
+        return {}
+
+    env = setup_vc_env_vars(repository_ctx, vc_path)
+    escaped_paths = escape_string(env["PATH"])
+    escaped_include_paths = escape_string(env["INCLUDE"])
+    escaped_lib_paths = escape_string(env["LIB"])
+    escaped_tmp_dir = escape_string(
+        get_env_var(repository_ctx, "TMP", "C:\\Windows\\Temp").replace(
+            "\\",
+            "\\\\",
+        ),
+    )
+
+    msvc_cl_path = "windows/msvc_wrapper_for_nvcc.bat"
+    msvc_ml_path = find_msvc_tool(repository_ctx, vc_path, "ml64.exe").replace(
+        "\\",
+        "/",
+    )
+    msvc_link_path = find_msvc_tool(repository_ctx, vc_path, "link.exe").replace(
+        "\\",
+        "/",
+    )
+    msvc_lib_path = find_msvc_tool(repository_ctx, vc_path, "lib.exe").replace(
+        "\\",
+        "/",
+    )
+
+    # nvcc will generate some temporary source files under %{nvcc_tmp_dir}
+    # The generated files are guaranteed to have unique name, so they can share
+    # the same tmp directory
+    escaped_cxx_include_directories = [
+        escaped_tmp_dir + "\\\\nvcc_inter_files_tmp_dir",
+        "C:\\\\botcode\\\\w",
+    ]
+    for path in escaped_include_paths.split(";"):
+        if path:
+            escaped_cxx_include_directories.append(path)
+
     cuda_defines.update({
-        "%{msvc_env_tmp}": "msvc_not_used",
-        "%{msvc_env_path}": "msvc_not_used",
-        "%{msvc_env_include}": "msvc_not_used",
-        "%{msvc_env_lib}": "msvc_not_used",
-        "%{msvc_cl_path}": "msvc_not_used",
-        "%{msvc_ml_path}": "msvc_not_used",
-        "%{msvc_link_path}": "msvc_not_used",
-        "%{msvc_lib_path}": "msvc_not_used",
+        "%{msvc_env_tmp}": escaped_tmp_dir, # "msvc_not_used",
+        "%{msvc_env_path}": escaped_paths, # "msvc_not_used",
+        "%{msvc_env_include}": escaped_include_paths, # "msvc_not_used",
+        "%{msvc_env_lib}": escaped_lib_paths, # "msvc_not_used",
+        "%{msvc_cl_path}": msvc_cl_path, # "msvc_not_used",
+        "%{msvc_ml_path}": msvc_ml_path, # "msvc_not_used",
+        "%{msvc_link_path}": msvc_link_path, # "msvc_not_used",
+        "%{msvc_lib_path}": msvc_lib_path, # "msvc_not_used",
+        "%{cxx_builtin_include_directories}": to_list_of_strings(
+            host_compiler_includes + escaped_cxx_include_directories,
+        ),
         "%{win_compiler_deps}": ":empty",
     })
 
