@@ -1,0 +1,1 @@
+C:/Users/AMD/anaconda3/python.exe %~dp0msvc_wrapper_for_nvcc.py %*
