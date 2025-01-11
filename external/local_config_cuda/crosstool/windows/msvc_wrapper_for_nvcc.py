@@ -215,10 +215,12 @@ def ProcessFlagForCommandFile(flag):
   if flag.startswith("/D") or flag.startswith("-D"):
     # We need to re-escape /DFOO="BAR" as /DFOO=\"BAR\", so that we get
     # `#define FOO "BAR"` after expansion as a string literal define
-    if flag.endswith('"') and not flag.endswith('\\"'):
-      flag = '\\"'.join(flag.split('"', 1))
-      flag = '\\"'.join(flag.rsplit('"', 1))
-      return flag
+    if flag.endswith('"'): # and not flag.endswith('\\"'):
+      # flag = '\\"'.join(flag.split('"', 1))
+      # flag = '\\"'.join(flag.rsplit('"', 1))
+      D = flag.split('\\')
+      variable = '-D ' + D[0][2:] + D[1] + D[2]
+      return variable # flag
   return flag
 
 def main():
