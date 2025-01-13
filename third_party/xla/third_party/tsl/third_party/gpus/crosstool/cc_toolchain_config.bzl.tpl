@@ -643,6 +643,7 @@ def _features(cpu, compiler, ctx):
                                     "/wd4291",
                                     "/wd4250",
                                     "/wd4996",
+                                    "-Wno-implicit-function-declaration",
                                 ],
                             ),
                             _iterate_flag_group(

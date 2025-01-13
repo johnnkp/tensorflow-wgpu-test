@@ -365,8 +365,8 @@ build:windows --features=archive_param_file
 build:windows --copt=/d2ReducedOptimizeHugeFunctions
 build:windows --host_copt=/d2ReducedOptimizeHugeFunctions
 
-build:windows --copt=-Wno-implicit-function-declaration
-build:windows --host_copt=-Wno-implicit-function-declaration
+# build:windows --copt=-Wno-implicit-function-declaration
+# build:windows --host_copt=-Wno-implicit-function-declaration
 
 # Before VS 2017 15.8, the member "type" would non-conformingly have an
 # alignment of only alignof(max_align_t). VS 2017 15.8 was fixed to handle this
