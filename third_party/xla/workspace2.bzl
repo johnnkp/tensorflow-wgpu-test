@@ -99,9 +99,9 @@ def _tf_repositories():
     tf_http_archive(
         name = "cutlass_archive",
         build_file = "//third_party:cutlass.BUILD",
-        sha256 = "84cf3fcc47c440a8dde016eb458f8d6b93b3335d9c3a7a16f388333823f1eae0",
-        strip_prefix = "cutlass-afa7b7241aabe598b725c65480bd9fa71121732c",
-        urls = tf_mirror_urls("https://github.com/chsigg/cutlass/archive/afa7b7241aabe598b725c65480bd9fa71121732c.tar.gz"),
+        sha256 = "7576f3437b90d0de5923560ccecebaa1357e5d72f36c0a59ad77c959c9790010",
+        strip_prefix = "cutlass-3.6.0",
+        urls = tf_mirror_urls("https://github.com/NVIDIA/cutlass/archive/refs/tags/v3.6.0.tar.gz"),
     )
 
     tf_http_archive(
