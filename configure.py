@@ -1274,9 +1274,9 @@ def main():
           'Starting in TF 2.11, CUDA build is not supported for Windows. '
           'For using TensorFlow GPU on Windows, you will need to build/install '
           'TensorFlow in WSL2.\n')
-    environ_cp['TF_NEED_CUDA'] = '0'
-  else:
-    environ_cp['TF_NEED_CUDA'] = str(
+    # environ_cp['TF_NEED_CUDA'] = '0'
+  # else:
+  environ_cp['TF_NEED_CUDA'] = str(
         int(get_var(environ_cp, 'TF_NEED_CUDA', 'CUDA', False)))
   if environ_cp.get('TF_NEED_CUDA') == '1':
     set_hermetic_cuda_version(environ_cp)

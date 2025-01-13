@@ -89,7 +89,7 @@ cc_binary(
         ],
         # If Visual Studio 2022 developers facing linking errors,
         # change the line below as ":windows": ["/DEFAULTLIB:msvcrt.lib"],
-        ":windows": [],
+        ":windows": ["/DEFAULTLIB:msvcrt.lib"],
         "//conditions:default": [
             "-lm",
             "-ldl",
