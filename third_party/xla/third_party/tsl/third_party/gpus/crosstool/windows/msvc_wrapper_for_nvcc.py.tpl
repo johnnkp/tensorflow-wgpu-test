@@ -248,6 +248,7 @@ def main():
     commandfile_path = output[0][3:] + ".msvc_params"
     commandfile = open(commandfile_path, "w")
     cpu_compiler_flags = [ProcessFlagForCommandFile(flag) for flag in cpu_compiler_flags]
+    cpu_compiler_flags.insert(1, "-Wno-implicit-function-declaration")
     commandfile.write("\n".join(cpu_compiler_flags))
     commandfile.close()
     return subprocess.call([CPU_COMPILER, "@" + commandfile_path])
