@@ -137,6 +137,7 @@ def _get_msvc_compiler(repository_ctx):
 
 def _get_win_cuda_defines(repository_ctx):
     """Return CROSSTOOL defines for Windows"""
+    from glob import glob
 
     # If we are not on Windows, return fake vaules for Windows specific fields.
     # This ensures the CROSSTOOL file parser is happy.
@@ -190,6 +191,7 @@ def _get_win_cuda_defines(repository_ctx):
     # the same tmp directory
     escaped_cxx_include_directories = [
         _get_nvcc_tmp_dir_for_windows(repository_ctx),
+        glob('C:/Program Files/LLVM/lib/clang/*/include')[0].replace("\\", "/")
         "C:\\\\botcode\\\\w",
     ]
     for path in escaped_include_paths.split(";"):
