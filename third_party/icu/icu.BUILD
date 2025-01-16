@@ -30,7 +30,7 @@ cc_library(
     ],
 )
 
-cc_library(
+""" cc_library(
     name = "icuuc",
     srcs = glob(
         [
@@ -68,6 +68,13 @@ cc_library(
     deps = [
         ":headers",
     ],
+) """
+
+genrule(
+    name = "icuuc",
+    srcs = [],
+    outs = ["icuuc.lib"],
+    cmd = "cp icuuc.lib bazel-out/x64_windows-opt/bin/external/icu",
 )
 
 config_setting(

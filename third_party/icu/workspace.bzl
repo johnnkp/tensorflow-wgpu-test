@@ -7,10 +7,10 @@ load("//third_party:repo.bzl", "tf_http_archive", "tf_mirror_urls")
 def repo():
     tf_http_archive(
         name = "icu",
-        strip_prefix = "icu-release-69-1",
-        sha256 = "3144e17a612dda145aa0e4acb3caa27a5dae4e26edced64bc351c43d5004af53",
-        urls = tf_mirror_urls("https://github.com/unicode-org/icu/archive/release-69-1.zip"),
+        strip_prefix = "icu4c-76.1",
+        sha256 = "605181c31ce7b44577ee3294e2083bdcf0424033427403f7985990ff491cb645",
+        urls = "https://github.com/johnnkp/icu4c/archive/refs/tags/v76.1.zip",
         build_file = "//third_party/icu:icu.BUILD",
         system_build_file = "//third_party/icu:BUILD.system",
-        patch_file = ["//third_party/icu:udata.patch"],
+        # patch_file = ["//third_party/icu:udata.patch"],
     )
