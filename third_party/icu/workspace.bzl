@@ -11,8 +11,8 @@ def repo():
         name = "icu",
         strip_prefix = "icu4c-76.1",
         sha256 = "4613cee8aaded96aac559b195e36857b4bedad53895b76571543c1b319f6ae68",
-        urls = "https://github.com/johnnkp/icu4c/archive/refs/tags/v76.1.tar.gz",
+        url = "https://github.com/johnnkp/icu4c/archive/refs/tags/v76.1.tar.gz",
         build_file = "//third_party/icu:icu.BUILD",
-        system_build_file = "//third_party/icu:BUILD.system",
+        # system_build_file = "//third_party/icu:BUILD.system",
         # patch_file = ["//third_party/icu:udata.patch"],
     )
