@@ -35,6 +35,9 @@ load("//third_party/hexagon:workspace.bzl", hexagon_nn = "repo")
 load("//third_party/highwayhash:workspace.bzl", highwayhash = "repo")
 load("//third_party/hwloc:workspace.bzl", hwloc = "repo")
 load("//third_party/icu:workspace.bzl", icu = "repo")
+
+load("//third_party/llvm:windows_prebuilt.bzl", llvm_windows_prebuilt = "repo")
+
 load("//third_party/implib_so:workspace.bzl", implib_so = "repo")
 load("//third_party/jpeg:workspace.bzl", jpeg = "repo")
 load("//third_party/kissfft:workspace.bzl", kissfft = "repo")
@@ -75,6 +78,9 @@ def _initialize_third_party():
     highwayhash()
     hwloc()
     icu()
+    
+    llvm_windows_prebuilt()
+    
     implib_so()
     jpeg()
     kissfft()
