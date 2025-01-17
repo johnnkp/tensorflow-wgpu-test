@@ -28,7 +28,7 @@ import sys
 import tempfile
 
 # Template values set by cuda_autoconf.
-CPU_COMPILER = ('%{cpu_compiler}')
+CPU_COMPILER = ('C:/Program Files/LLVM/bin/clang-cl.exe') # '%{cpu_compiler}')
 GCC_HOST_COMPILER_PATH = ('%{gcc_host_compiler_path}')
 
 NVCC_PATH = '%{nvcc_path}'
@@ -245,12 +245,19 @@ def main():
 
   # Store command line options in a file to avoid hitting the character limit.
   if len(output) == 1:
-    commandfile_path = output[0][3:] + ".msvc_params"
-    commandfile = open(commandfile_path, "w")
-    cpu_compiler_flags = [ProcessFlagForCommandFile(flag) for flag in cpu_compiler_flags]
-    commandfile.write("\n".join(cpu_compiler_flags))
-    commandfile.close()
-    return subprocess.call([CPU_COMPILER, "@" + commandfile_path])
+    try:
+      commandfile_path = output[0][3:] + ".msvc_params"
+      commandfile = open(commandfile_path, "w")
+      cpu_compiler_flags = [ProcessFlagForCommandFile(flag) for flag in cpu_compiler_flags]
+      cpu_compiler_flags.insert(1, "-Wno-implicit-function-declaration")
+      commandfile.write("\n".join(cpu_compiler_flags))
+      commandfile.close()
+      return subprocess.call([CPU_COMPILER, "@" + commandfile_path])
+    except:
+      cpu_compiler_flags = [ProcessFlagForCommandFile(flag) for flag in cpu_compiler_flags]
+      cpu_compiler_flags.insert(0, "-Wno-implicit-function-declaration")
+      cpu_compiler_flags.insert(0, CPU_COMPILER)
+      return subprocess.call(cpu_compiler_flags)
   else:
     return subprocess.call([CPU_COMPILER] + cpu_compiler_flags)
   return subprocess.call([CPU_COMPILER] + cpu_compiler_flags)
