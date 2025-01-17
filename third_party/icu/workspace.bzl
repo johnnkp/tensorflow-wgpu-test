@@ -1,16 +1,16 @@
 """Loads a lightweight subset of the ICU library for Unicode processing."""
 
-load("//third_party:repo.bzl", "tf_http_archive", "tf_mirror_urls")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # NOTE: If you upgrade this, generate the data files by following the
 # instructions in third_party/icu/data/BUILD
 def repo():
-    tf_http_archive(
+    http_archive(
         name = "icu",
-        strip_prefix = "icu-release-69-1",
-        sha256 = "3144e17a612dda145aa0e4acb3caa27a5dae4e26edced64bc351c43d5004af53",
-        urls = tf_mirror_urls("https://github.com/unicode-org/icu/archive/release-69-1.zip"),
+        strip_prefix = "icu4c-76.1",
+        sha256 = "4613cee8aaded96aac559b195e36857b4bedad53895b76571543c1b319f6ae68",
+        url = "https://github.com/johnnkp/icu4c/archive/refs/tags/v76.1.tar.gz",
         build_file = "//third_party/icu:icu.BUILD",
-        system_build_file = "//third_party/icu:BUILD.system",
-        patch_file = ["//third_party/icu:udata.patch"],
+        # system_build_file = "//third_party/icu:BUILD.system",
+        # patch_file = ["//third_party/icu:udata.patch"],
     )

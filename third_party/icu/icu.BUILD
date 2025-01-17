@@ -30,7 +30,7 @@ cc_library(
     ],
 )
 
-cc_library(
+""" cc_library(
     name = "icuuc",
     srcs = glob(
         [
@@ -68,8 +68,13 @@ cc_library(
     deps = [
         ":headers",
     ],
-)
+) """
 
+genrule(
+    name = "icuuc",
+    outs = ["icuuc.lib"],
+    cmd = "cp icuuc.lib bazel-out/x64_windows-opt/bin/external/icu",
+)
 config_setting(
     name = "android",
     values = {"crosstool_top": "//external:android/crosstool"},
