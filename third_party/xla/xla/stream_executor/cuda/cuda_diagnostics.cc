@@ -19,7 +19,7 @@ limitations under the License.
 #include <set>
 
 #if !defined(PLATFORM_WINDOWS)
-#include <dirent.h>
+// #include <dirent.h>
 #endif
 
 #include <limits.h>
@@ -29,9 +29,9 @@ limitations under the License.
 #include <string.h>
 
 #if !defined(PLATFORM_WINDOWS)
-#include <link.h>
-#include <sys/sysmacros.h>
-#include <unistd.h>
+// #include <link.h>
+// #include <sys/sysmacros.h>
+// #include <unistd.h>
 #endif
 
 #include <sys/stat.h>
