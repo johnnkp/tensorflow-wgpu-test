@@ -2673,7 +2673,7 @@ tf_kernel_library(
     name = "test_ops_kernels",
     srcs = ["test_ops.cc"],
     hdrs = ["test_ops.h"],
-    gpu_srcs = ["test_ops.cu.cc"],
+    # gpu_srcs = ["test_ops.cu.cc"],
     deps = [
         "//tensorflow/core:framework",
         "//tensorflow/core:lib",
