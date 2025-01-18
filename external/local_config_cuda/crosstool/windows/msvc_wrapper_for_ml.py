@@ -103,7 +103,6 @@ def main():
   asm_path = assembler_flags[-1].split('/')
   asm_path[-1] = file_extension
   asm_path = '/'.join(asm_path)
-  print(os.path.join(os.getcwd(), asm_path).replace('\\', '/'))
   AsmCleanup(os.path.join(os.getcwd(), assembler_flags[-1]).replace('\\', '/'),
     os.path.join(os.getcwd(), asm_path).replace('\\', '/'))
 

@@ -121,7 +121,17 @@ def InvokeNvcc(argv, log=False):
   include_options, argv = GetOptionValue(argv, '/I')
   includes = ["-I " + include for include in include_options]
 
-  defines, argv = GetOptionValue(argv, '/D')
+  defines_raw, argv = GetOptionValue(argv, '/D')
+  # delay_kernel_cuda.cu.cc: nvcc fatal : Stray '"' character
+  defines = []
+  for define in defines_raw:
+    if define.find('\"') >= 0:
+      flag = define.split('\"')
+      flag = ''.join(flag)
+      flag = flag.split('\\')
+      define = ''.join(flag)
+    defines.append(define)
+
   defines = [
       '-D' + define
       for define in defines
@@ -144,13 +154,15 @@ def InvokeNvcc(argv, log=False):
   for capability in compute_capabilities:
     capability = capability[len('sm_'):]
     nvccopts += [
-        r'-gencode=arch=compute_%s,"code=sm_%s"' % (capability, capability)
+        # r'-gencode=arch=compute_%s,"code=sm_%s"' % (capability, capability)
+        r'-gencode=arch=compute_%s,code=sm_%s' % (capability, capability)
     ]
   compute_capabilities, argv = GetOptionValue(argv, '--cuda-include-ptx')
   for capability in compute_capabilities:
     capability = capability[len('sm_'):]
     nvccopts += [
-        r'-gencode=arch=compute_%s,"code=compute_%s"' % (capability, capability)
+        # r'-gencode=arch=compute_%s,"code=compute_%s"' % (capability, capability)
+        r'-gencode=arch=compute_%s,code=compute_%s' % (capability, capability)
     ]
   _, argv = GetOptionValue(argv, '--no-cuda-include-ptx')
 
@@ -184,6 +196,7 @@ def InvokeNvcc(argv, log=False):
   # This is so that nvcc does not complain about MSVC or CLANG.
   nvccopts += ['-allow-unsupported-compiler']
   nvccopts += ['--expt-extended-lambda', '--expt-relaxed-constexpr']
+
   if log:
     Log([NVCC_PATH] + nvccopts)
 

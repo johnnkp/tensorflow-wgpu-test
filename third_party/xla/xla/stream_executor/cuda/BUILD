@@ -473,7 +473,7 @@ cc_library(
 cuda_library(
     name = "delay_kernel_cuda",
     srcs = [
-        "delay_kernel_cuda.cu.cc",
+        # "delay_kernel_cuda.cu.cc",
     ],
     hdrs = ["delay_kernel.h"],
     # copybara:uncomment compatible_with = ["//buildenv/target:non_prod"],
