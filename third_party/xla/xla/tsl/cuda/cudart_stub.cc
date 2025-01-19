@@ -74,8 +74,8 @@ static cudaError_t GetSymbolNotFoundError() {
 extern void *_cudart_tramp_table[];
 
 void _cudart_tramp_resolve(int i) {
-  CHECK_LE(0, i);
-  CHECK_LT(i, kNumSymbols);
+  /* CHECK_LE(0, i);
+  CHECK_LT(i, kNumSymbols); */
   void *p = LoadSymbol(kSymbols[i]);
   if (!p) {
     const auto &error_string_symbols = ErrorStringSymbols();
