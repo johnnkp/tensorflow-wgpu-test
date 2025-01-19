@@ -2654,7 +2654,7 @@ tf_py_strict_test(
     ],
 )
 
-""" tf_gen_op_wrapper_py(
+tf_gen_op_wrapper_py(
     name = "test_ops",
     out = "test_ops.py",
     api_def_srcs = [
@@ -2669,7 +2669,7 @@ tf_py_strict_test(
     ],
     py_lib_rule = py_strict_library,
     deps = [":test_ops_kernels"],
-) """
+)
 
 tf_kernel_library(
     name = "test_ops_kernels",
