@@ -577,7 +577,7 @@ tf_py_strict_test(
     size = "small",
     srcs = ["function_def_to_graph_test.py"],
     python_version = "PY3",
-    tags = ["no_pip"],
+    tags = ["no_pip", "no_windows"],
     deps = [
         ":constant_op",
         ":dtypes",
@@ -1535,6 +1535,7 @@ cuda_py_strict_test(
     tags = [
         "multi_gpu",
         "no_pip",
+        "no_windows",
     ],  # test_ops are not available in pip.
     deps = [
         ":config",
@@ -1565,6 +1566,7 @@ cuda_py_strict_test(
         "gpu",
         "multi_gpu",
         "no_pip",
+        "no_windows",
     ],  # test_ops are not available in pip.
     deps = [
         ":config",
@@ -1588,7 +1590,7 @@ tpu_py_strict_test(
     disable_tfrt = True,  # TODO(b/291666911): Update this test to call initialize_tpu_system
     main = "config_test.py",
     python_version = "PY3",
-    tags = ["no_pip"],  # test_ops are not available in pip.
+    tags = ["no_pip", "no_windows"],  # test_ops are not available in pip.
     deps = [
         ":config",
         ":constant_op",
@@ -2536,7 +2538,7 @@ tf_py_strict_test(
     srcs = ["importer_test.py"],
     main = "importer_test.py",
     python_version = "PY3",
-    tags = ["no_rocm"],
+    tags = ["no_rocm", "no_windows"],
     deps = [
         ":constant_op",
         ":device",
@@ -2703,7 +2705,7 @@ tf_py_strict_test(
     srcs = ["ops_test.py"],
     main = "ops_test.py",
     python_version = "PY3",
-    tags = ["no_pip"],
+    tags = ["no_pip", "no_windows"],
     deps = [
         ":composite_tensor",
         ":config",
