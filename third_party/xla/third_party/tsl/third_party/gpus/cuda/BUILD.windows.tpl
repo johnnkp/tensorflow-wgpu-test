@@ -5,6 +5,7 @@
 load(":build_defs.bzl", "cuda_header_library")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 
 licenses(["restricted"])  # MPL2, portions GPL v3, LGPL v3, BSD-like
 
@@ -237,6 +238,49 @@ bzl_library(
 py_library(
     name = "cuda_config_py",
     srcs = ["cuda/cuda_config.py"],
+)
+
+alias(
+    name = "implicit_cuda_headers_dependency",
+    actual = ":cuda_headers",
+)
+alias(
+  name = "cuda_runtime",
+  actual = ":cudart_static",
+)
+alias(
+    name = "cuda_tools",
+    actual = "@local_config_cuda//:is_cuda_enabled",
+)
+bool_flag(
+    name = "include_cuda_libs",
+    build_setting_default = False,
+)
+config_setting(
+    name = "cuda_libs",
+    flag_values = {":include_cuda_libs": "True"},
+)
+bool_flag(
+    name = "override_include_cuda_libs",
+    build_setting_default = False,
+)
+config_setting(
+    name = "overrided_cuda_libs",
+    flag_values = {":override_include_cuda_libs": "True"},
+)
+selects.config_setting_group(
+    name = "any_cuda_libs",
+    match_any = [
+        ":cuda_libs",
+        ":overrided_cuda_libs"
+    ],
+)
+selects.config_setting_group(
+    name = "cuda_tools_and_libs",
+    match_all = [
+        ":any_cuda_libs",
+        ":cuda_tools"
+    ],
 )
 
 %{copy_rules}
