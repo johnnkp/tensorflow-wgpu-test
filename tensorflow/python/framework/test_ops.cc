@@ -31,7 +31,7 @@ limitations under the License.
 
 namespace tensorflow {
 
-REGISTER_OP("KernelLabel")
+/* REGISTER_OP("KernelLabel")
     .Output("result: string")
     .SetShapeFn(shape_inference::ScalarShape);
 
@@ -880,5 +880,5 @@ REGISTER_KERNEL_BUILDER(
     IsTensorFloat32Enabled);
 REGISTER_KERNEL_BUILDER(
     Name("IsTensorFloat32Enabled").Device(DEVICE_GPU).HostMemory("enabled"),
-    IsTensorFloat32Enabled);
+    IsTensorFloat32Enabled); */
 }  // end namespace tensorflow
