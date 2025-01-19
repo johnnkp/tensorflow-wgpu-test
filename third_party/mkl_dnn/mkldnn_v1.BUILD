@@ -171,7 +171,6 @@ cc_library(
             "src/cpu/**/*.cpp",
             "src/common/ittnotify/*.c",
             "src/cpu/jit_utils/**/*.cpp",
-            "src/cpu/x64/**/*.cpp",
             "src/graph/interface/*.cpp",
             "src/graph/backend/*.cpp",
             "src/graph/backend/dnnl/*.cpp",
@@ -181,6 +180,36 @@ cc_library(
             "src/graph/backend/dnnl/kernels/*.cpp",
             "src/graph/utils/*.cpp",
             "src/graph/utils/pm/*.cpp",
+        ],
+        exclude = [
+            "src/cpu/aarch64/**",
+            "src/cpu/rv64/**",
+            "src/cpu/x64/gemm/**/*_kern_autogen.cpp",
+            "src/cpu/x64/**/*.cpp",
+        ],
+    ),
+    copts = _COPTS_LIST,
+    includes = _INCLUDES_LIST,
+    # TODO(penpornk): Use lrt_if_needed from tensorflow.bzl instead.
+    linkopts = select({
+        "@local_xla//xla/tsl:linux_aarch64": ["-lrt"],
+        "@local_xla//xla/tsl:linux_x86_64": ["-lrt"],
+        "@local_xla//xla/tsl:linux_ppc64le": ["-lrt"],
+        "//conditions:default": [],
+    }),
+    textual_hdrs = _TEXTUAL_HDRS_LIST,
+    visibility = ["//visibility:public"],
+    deps = [":onednn_autogen", ":mkl_dnn_cpu_x64"] + if_mkl_ml(
+        ["@local_xla//xla/tsl/mkl:intel_binary_blob"],
+        [],
+    ),
+)
+
+cc_library(
+    name = "mkl_dnn_cpu_x64",
+    srcs = glob(
+        [
+            "src/cpu/x64/**/*.cpp",
         ],
         exclude = [
             "src/cpu/aarch64/**",
