@@ -588,7 +588,7 @@ tf_py_strict_test(
         ":tensor_shape",
         ":tensor_spec",
         ":test_lib",
-        ":test_ops",
+        # ":test_ops",
         "//tensorflow/python/eager:def_function",
         "//tensorflow/python/ops:array_ops",
         "//tensorflow/python/ops:math_ops",
@@ -1544,7 +1544,7 @@ cuda_py_strict_test(
         ":errors",
         ":ops",
         ":test_lib",
-        ":test_ops",
+        # ":test_ops",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python/eager:context",
         "//tensorflow/python/eager:def_function",
@@ -1598,7 +1598,7 @@ tpu_py_strict_test(
         ":errors",
         ":ops",
         ":test_lib",
-        ":test_ops",
+        # ":test_ops",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python/eager:context",
         "//tensorflow/python/eager:def_function",
@@ -2548,7 +2548,7 @@ tf_py_strict_test(
         ":ops",
         ":tensor_shape",
         ":test_lib",
-        ":test_ops",
+        # ":test_ops",
         ":versions",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python/ops:array_ops",
@@ -2654,7 +2654,7 @@ tf_py_strict_test(
     ],
 )
 
-tf_gen_op_wrapper_py(
+""" tf_gen_op_wrapper_py(
     name = "test_ops",
     out = "test_ops.py",
     api_def_srcs = [
@@ -2669,7 +2669,7 @@ tf_gen_op_wrapper_py(
     ],
     py_lib_rule = py_strict_library,
     deps = [":test_ops_kernels"],
-)
+) """
 
 tf_kernel_library(
     name = "test_ops_kernels",
@@ -2722,7 +2722,7 @@ tf_py_strict_test(
         ":tensor_shape",
         ":tensor_util",
         ":test_lib",
-        ":test_ops",
+        # ":test_ops",
         ":type_spec",
         ":versions",
         "//tensorflow/core:protos_all_py",
@@ -3082,7 +3082,7 @@ cuda_py_strict_test(
         ":random_seed",
         ":tensor",
         ":test_lib",
-        ":test_ops",
+        # ":test_ops",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python:pywrap_sanitizers",
         "//tensorflow/python/compat",
