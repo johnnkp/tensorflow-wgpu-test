@@ -47,7 +47,7 @@ genrule(
     outs = [
         "passes/quantized_function_library.h",
     ],
-    cmd = "$(location gen_quantized_function_library) --output_file $(RULEDIR)/passes/quantized_function_library.h --src '$(SRCS)'",
+    cmd = "python tensorflow/compiler/mlir/quantization/tensorflow/gen_quantized_function_library.py --output_file $(RULEDIR)/passes/quantized_function_library.h --src '$(SRCS)'",
     compatible_with = get_compatible_with_portable(),
     tools = ["gen_quantized_function_library"],
 )

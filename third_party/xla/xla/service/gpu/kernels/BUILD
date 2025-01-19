@@ -359,7 +359,7 @@ cuda_library(
     hdrs = ["cutlass_gemm_adaptor.cu.h"],
     copts = if_windows(
         [],
-        ["-Wno-unknown-attributes"],
+        # ["-Wno-unknown-attributes"],
     ),  # __grid_constant__ is not supported by clang
     tags = ["cuda-only"],
     deps = [
@@ -412,7 +412,7 @@ cuda_library(
         "-unroll-threshold=100000",
     ] + if_windows(
         [],
-        ["-Wno-unknown-attributes"],
+        # ["-Wno-unknown-attributes"],
     ),
     tags = ["cuda-only"],
     deps = [
@@ -427,7 +427,7 @@ cuda_library(
     srcs = ["cutlass_gemm_kernel_f32xf32_to_f32.cu.cc"],
     copts = if_windows(
         [],
-        ["-Wno-unknown-attributes"],
+        # ["-Wno-unknown-attributes"],
     ),
     tags = ["cuda-only"],
     deps = [
@@ -445,7 +445,7 @@ cuda_library(
         "-unroll-threshold=100000",
     ] + if_windows(
         [],
-        ["-Wno-unknown-attributes"],
+        # ["-Wno-unknown-attributes"],
     ),
     tags = ["cuda-only"],
     deps = [
@@ -463,7 +463,7 @@ cuda_library(
         "-unroll-threshold=100000",
     ] + if_windows(
         [],
-        ["-Wno-unknown-attributes"],
+        # ["-Wno-unknown-attributes"],
     ),
     tags = ["cuda-only"],
     deps = [
@@ -476,7 +476,7 @@ cuda_library(
 cuda_library(
     name = "cutlass_gemm_kernel_bf16xs8_to_f32",
     srcs = ["cutlass_gemm_kernel_bf16xs8_to_f32.cu.cc"],
-    copts = ["-Wno-unknown-attributes -mllvm -unroll-threshold=100000"],
+    copts = ["-mllvm -unroll-threshold=100000"],
     tags = [
         "cuda-only",
         "gpu",
